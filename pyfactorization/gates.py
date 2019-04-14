@@ -1,89 +1,95 @@
 def and_gate(a, b, z):
-    if   (a, b, z) == ('Z', 'Z', 'Z'): return ({"gates": ('Z', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', 'Z', '0'): return ({"gates": ('Z', 'Z', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', 'Z', '1'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '0', 'Z'): return ({"gates": ('Z', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '0', '0'): return ({"gates": ('Z', '0', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '0', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('Z', '1', 'Z'): return ({"gates": ('Z', '1', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '1', '0'): return ({"gates": ('0', '1', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '1', '1'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', 'Z', 'Z'): return ({"gates": ('0', 'Z', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', 'Z', '0'): return ({"gates": ('0', 'Z', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', 'Z', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('0', '0', 'Z'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '0', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', '0', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('0', '1', 'Z'): return ({"gates": ('0', '1', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '1', '0'): return ({"gates": ('0', '1', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', '1', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', 'Z', 'Z'): return ({"gates": ('1', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', 'Z', '0'): return ({"gates": ('1', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', 'Z', '1'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '0', 'Z'): return ({"gates": ('1', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '0', '0'): return ({"gates": ('1', '0', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', '0', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', '1', 'Z'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '1', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', '1', '1'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '0'})
-    else : return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
+    and_gate_dict = {
+        ('Z', 'Z', 'Z'): {"gates": ('Z', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('Z', 'Z', '0'): {"gates": ('Z', 'Z', '0'), "error": '0', "change": '0'},
+        ('Z', 'Z', '1'): {"gates": ('1', '1', '1'), "error": '0', "change": '1'},
+        ('Z', '0', 'Z'): {"gates": ('Z', '0', '0'), "error": '0', "change": '1'},
+        ('Z', '0', '0'): {"gates": ('Z', '0', '0'), "error": '0', "change": '0'},
+        ('Z', '0', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('Z', '1', 'Z'): {"gates": ('Z', '1', 'Z'), "error": '0', "change": '0'},
+        ('Z', '1', '0'): {"gates": ('0', '1', '0'), "error": '0', "change": '1'},
+        ('Z', '1', '1'): {"gates": ('1', '1', '1'), "error": '0', "change": '1'},
+        ('0', 'Z', 'Z'): {"gates": ('0', 'Z', '0'), "error": '0', "change": '1'},
+        ('0', 'Z', '0'): {"gates": ('0', 'Z', '0'), "error": '0', "change": '0'},
+        ('0', 'Z', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('0', '0', 'Z'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('0', '0', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '0'},
+        ('0', '0', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('0', '1', 'Z'): {"gates": ('0', '1', '0'), "error": '0', "change": '1'},
+        ('0', '1', '0'): {"gates": ('0', '1', '0'), "error": '0', "change": '0'},
+        ('0', '1', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', 'Z', 'Z'): {"gates": ('1', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('1', 'Z', '0'): {"gates": ('1', '0', '0'), "error": '0', "change": '1'},
+        ('1', 'Z', '1'): {"gates": ('1', '1', '1'), "error": '0', "change": '1'},
+        ('1', '0', 'Z'): {"gates": ('1', '0', '0'), "error": '0', "change": '1'},
+        ('1', '0', '0'): {"gates": ('1', '0', '0'), "error": '0', "change": '0'},
+        ('1', '0', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', '1', 'Z'): {"gates": ('1', '1', '1'), "error": '0', "change": '1'},
+        ('1', '1', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', '1', '1'): {"gates": ('1', '1', '1'), "error": '0', "change": '0'},
+    }
+    return and_gate_dict.get((a, b, z), {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
 
 def xor_gate(a, b, z):
-    if   (a, b, z) == ('Z', 'Z', 'Z'): return ({"gates": ('Z', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', 'Z', '0'): return ({"gates": ('Z', 'Z', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', 'Z', '1'): return ({"gates": ('Z', 'Z', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '0', 'Z'): return ({"gates": ('Z', '0', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '0', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '0', '1'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '1', 'Z'): return ({"gates": ('Z', '1', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '1', '0'): return ({"gates": ('1', '1', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '1', '1'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', 'Z', 'Z'): return ({"gates": ('0', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', 'Z', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', 'Z', '1'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '0', 'Z'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '0', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', '0', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('0', '1', 'Z'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '1', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('0', '1', '1'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', 'Z', 'Z'): return ({"gates": ('1', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', 'Z', '0'): return ({"gates": ('1', '1', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', 'Z', '1'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '0', 'Z'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '0', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', '0', '1'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', '1', 'Z'): return ({"gates": ('1', '1', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '1', '0'): return ({"gates": ('1', '1', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', '1', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    else : return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
+    xor_gate_dict = {
+        ('Z', 'Z', 'Z'): {"gates": ('Z', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('Z', 'Z', '0'): {"gates": ('Z', 'Z', '0'), "error": '0', "change": '0'},
+        ('Z', 'Z', '1'): {"gates": ('Z', 'Z', '1'), "error": '0', "change": '0'},
+        ('Z', '0', 'Z'): {"gates": ('Z', '0', 'Z'), "error": '0', "change": '0'},
+        ('Z', '0', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('Z', '0', '1'): {"gates": ('1', '0', '1'), "error": '0', "change": '1'},
+        ('Z', '1', 'Z'): {"gates": ('Z', '1', 'Z'), "error": '0', "change": '0'},
+        ('Z', '1', '0'): {"gates": ('1', '1', '0'), "error": '0', "change": '1'},
+        ('Z', '1', '1'): {"gates": ('0', '1', '1'), "error": '0', "change": '1'},
+        ('0', 'Z', 'Z'): {"gates": ('0', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('0', 'Z', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('0', 'Z', '1'): {"gates": ('0', '1', '1'), "error": '0', "change": '1'},
+        ('0', '0', 'Z'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('0', '0', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '0'},
+        ('0', '0', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('0', '1', 'Z'): {"gates": ('0', '1', '1'), "error": '0', "change": '1'},
+        ('0', '1', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('0', '1', '1'): {"gates": ('0', '1', '1'), "error": '0', "change": '0'},
+        ('1', 'Z', 'Z'): {"gates": ('1', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('1', 'Z', '0'): {"gates": ('1', '1', '0'), "error": '0', "change": '1'},
+        ('1', 'Z', '1'): {"gates": ('1', '0', '1'), "error": '0', "change": '1'},
+        ('1', '0', 'Z'): {"gates": ('1', '0', '1'), "error": '0', "change": '1'},
+        ('1', '0', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', '0', '1'): {"gates": ('1', '0', '1'), "error": '0', "change": '0'},
+        ('1', '1', 'Z'): {"gates": ('1', '1', '0'), "error": '0', "change": '1'},
+        ('1', '1', '0'): {"gates": ('1', '1', '0'), "error": '0', "change": '0'},
+        ('1', '1', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+    }
+    return xor_gate_dict.get((a, b, z), {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
 
 def or_gate(a, b, z):
-    if   (a, b, z) == ('Z', 'Z', 'Z'): return ({"gates": ('Z', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', 'Z', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', 'Z', '1'): return ({"gates": ('Z', 'Z', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '0', 'Z'): return ({"gates": ('Z', '0', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('Z', '0', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '0', '1'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '1', 'Z'): return ({"gates": ('Z', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('Z', '1', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('Z', '1', '1'): return ({"gates": ('Z', '1', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', 'Z', 'Z'): return ({"gates": ('0', 'Z', 'Z'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', 'Z', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', 'Z', '1'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '0', 'Z'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '0', '0'): return ({"gates": ('0', '0', '0'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('0', '0', '1'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('0', '1', 'Z'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('0', '1', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('0', '1', '1'): return ({"gates": ('0', '1', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', 'Z', 'Z'): return ({"gates": ('1', 'Z', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', 'Z', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', 'Z', '1'): return ({"gates": ('1', 'Z', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', '0', 'Z'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '0', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', '0', '1'): return ({"gates": ('1', '0', '1'), "error": '0', "change": '0'})
-    elif (a, b, z) == ('1', '1', 'Z'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '1'})
-    elif (a, b, z) == ('1', '1', '0'): return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
-    elif (a, b, z) == ('1', '1', '1'): return ({"gates": ('1', '1', '1'), "error": '0', "change": '0'})
-    else : return ({"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
+    or_gate_dict = {
+        ('Z', 'Z', 'Z'): {"gates": ('Z', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('Z', 'Z', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('Z', 'Z', '1'): {"gates": ('Z', 'Z', '1'), "error": '0', "change": '0'},
+        ('Z', '0', 'Z'): {"gates": ('Z', '0', 'Z'), "error": '0', "change": '0'},
+        ('Z', '0', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('Z', '0', '1'): {"gates": ('1', '0', '1'), "error": '0', "change": '1'},
+        ('Z', '1', 'Z'): {"gates": ('Z', '1', '1'), "error": '0', "change": '1'},
+        ('Z', '1', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('Z', '1', '1'): {"gates": ('Z', '1', '1'), "error": '0', "change": '0'},
+        ('0', 'Z', 'Z'): {"gates": ('0', 'Z', 'Z'), "error": '0', "change": '0'},
+        ('0', 'Z', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('0', 'Z', '1'): {"gates": ('0', '1', '1'), "error": '0', "change": '1'},
+        ('0', '0', 'Z'): {"gates": ('0', '0', '0'), "error": '0', "change": '1'},
+        ('0', '0', '0'): {"gates": ('0', '0', '0'), "error": '0', "change": '0'},
+        ('0', '0', '1'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('0', '1', 'Z'): {"gates": ('0', '1', '1'), "error": '0', "change": '1'},
+        ('0', '1', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('0', '1', '1'): {"gates": ('0', '1', '1'), "error": '0', "change": '0'},
+        ('1', 'Z', 'Z'): {"gates": ('1', 'Z', '1'), "error": '0', "change": '1'},
+        ('1', 'Z', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', 'Z', '1'): {"gates": ('1', 'Z', '1'), "error": '0', "change": '0'},
+        ('1', '0', 'Z'): {"gates": ('1', '0', '1'), "error": '0', "change": '1'},
+        ('1', '0', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', '0', '1'): {"gates": ('1', '0', '1'), "error": '0', "change": '0'},
+        ('1', '1', 'Z'): {"gates": ('1', '1', '1'), "error": '0', "change": '1'},
+        ('1', '1', '0'): {"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'},
+        ('1', '1', '1'): {"gates": ('1', '1', '1'), "error": '0', "change": '0'},
+    }
+    return or_gate_dict.get((a, b, z),{"gates": ('Z', 'Z', 'Z'), "error": '1', "change": '1'})
