@@ -3,7 +3,7 @@ from . import MultiplierCellHalfadder
 from . import FullAdder
 from . import gates
 
-class SemiPrimeFactorization:
+class CarrySaveArrayMultiplier:
     def __init__(self, semiprime=6):
         self.output = "{0:b}".format(semiprime)
         if len(self.output) % 2 == 1:
