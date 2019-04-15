@@ -27,10 +27,16 @@ def test_6():
         ],
         "output": "0110"
     }
+    expected_information = {
+        'total_count': 8,
+        'resolved_count': 5
+    }
     actual_result = test.solve()
     actual_dump = test.dump()
+    actual_information = test.information_count()
     assert expected_result == actual_result
     assert expected_dump == actual_dump
+    assert expected_information == actual_information
 
 @pytest.mark.skip("Need to implment carry save")
 def test_6_carry_save():
@@ -111,10 +117,16 @@ def test_35():
         ],
         "output": "110001"
     }
+    expected_information = {
+        'total_count': 18,
+        'resolved_count': 6
+    }
     actual_result = test.solve()
     actual_dump = test.dump()
+    actual_information = test.information_count()
     assert expected_result == actual_result
     assert expected_dump == actual_dump
+    assert expected_information == actual_information
 
 @pytest.mark.skip("Need to implment carry save")
 def test_35_carry_save():
@@ -201,10 +213,16 @@ def test_143():
         ],
         "output": "11110001"
     }
+    expected_information = {
+        'total_count': 32,
+        'resolved_count': 9,
+    }
     actual_result = test.solve()
     actual_dump = test.dump()
+    actual_information = test.information_count()
     assert expected_result == actual_result
     assert expected_dump == actual_dump
+    assert expected_information == actual_information
 
 @pytest.mark.skip("Need to implment carry save")
 def test_143_carry_save():

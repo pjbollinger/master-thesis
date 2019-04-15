@@ -34,30 +34,39 @@ class RippleCarryArrayMultiplier:
 
     def information_count(self):
         total_count = 0
-        resolved_count = total_count
-        for row in self.carry:
-            for entry in row:
-                if (entry is not None):
-                    total_count = total_count + 1
-                if (entry == '1') or (entry == '0'):
-                    resolved_count = resolved_count + 1
-        for row in self.sum:
-            for entry in row:
-                if (entry is not None):
-                    total_count = total_count + 1
-                if (entry == '1') or (entry == '0'):
-                    resolved_count = resolved_count + 1
-        for entry in self.input_a:
-            if (entry is not None):
-                total_count = total_count + 1
-            if (entry == '1') or (entry == '0'):
-                resolved_count = resolved_count + 1
-        for entry in self.input_b:
-            if (entry is not None):
-                total_count = total_count + 1
-            if (entry == '1') or (entry == '0'):
-                resolved_count = resolved_count + 1
+        resolved_count = 0
+
+        count_carry = self._information_counter_two_dimensional(self.carry)
+        resolved_count += count_carry["resolved_count"]
+        total_count += count_carry["total_count"]
+
+        count_sum = self._information_counter_two_dimensional(self.sum)
+        resolved_count += count_sum["resolved_count"]
+        total_count += count_sum["total_count"]
+
+        count_input_a = self._information_counter_one_dimensional(self.input_a)
+        resolved_count += count_input_a["resolved_count"]
+        total_count += count_input_a["total_count"]
+
+        count_input_b = self._information_counter_one_dimensional(self.input_b)
+        resolved_count += count_input_b["resolved_count"]
+        total_count += count_input_b["total_count"]
+
         return({"total_count": total_count, "resolved_count": resolved_count})
+    
+    def _information_counter_two_dimensional(self, two_dimensional_list):
+        count_knowns = sum(row.count('1') for row in two_dimensional_list) + sum(row.count('0') for row in two_dimensional_list)
+        return {
+            "resolved_count": count_knowns,
+            "total_count": count_knowns + sum(row.count('Z') for row in two_dimensional_list)
+        }
+
+    def _information_counter_one_dimensional(self, one_dimensional_list):
+        count_knowns = one_dimensional_list.count('1') + one_dimensional_list.count('0')
+        return {
+            "resolved_count": count_knowns,
+            "total_count": count_knowns + one_dimensional_list.count('Z')
+        }
 
     def solve(self):
         raise NotImplementedError
