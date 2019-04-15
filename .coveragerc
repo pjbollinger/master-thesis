@@ -1,2 +1,5 @@
 [report]
 omit = pyfactorization/tests/*
+
+[xml]
+output = test_results/coverage.xml
