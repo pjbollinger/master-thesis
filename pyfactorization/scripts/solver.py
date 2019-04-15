@@ -4,7 +4,7 @@ import pprint
 import copy
 import itertools
 
-from pyfactorization.RippleCarryArrayMultiplier import StandardRippleCarryArrayMultiplier
+from pyfactorization.RippleCarryArrayMultiplier import RippleCarryArrayMultiplier
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -17,7 +17,7 @@ print("a, b, resolved_count, total_count, error")
 for entry in ranges:
     a = sympy.randprime(entry[0], entry[1])
     b = sympy.nextprime(a) if sympy.nextprime(a) <= entry[1] else sympy.prevprime(a)
-    original = StandardRippleCarryArrayMultiplier(a * b)
+    original = RippleCarryArrayMultiplier(a * b)
     result = original.solve()
     information_count = original.information_count()
     print("{}, {}, {}, {}, {}".format(a, b, information_count['resolved_count'], information_count['total_count'], result['error']))
