@@ -3,7 +3,7 @@ from . import MultiplierCellHalfadder
 from . import FullAdder
 from . import gates
 
-class SemiPrimeFactorization:
+class CarrySaveArrayMultiplier:
     def __init__(self, semiprime=6):
         self.output = "{0:b}".format(semiprime)
         if len(self.output) % 2 == 1:
@@ -98,8 +98,8 @@ class SemiPrimeFactorization:
                 elif (row == len(self.input_b)-1 and column == len(self.input_a)-1):
                     # Bottom Left Corner
                     # print("Bottom Left Corner", "Row:", str(i), "Column:", str(j))
-                    # print([self.input_a[j], self.input_b[i], '0', self.carry[i-1][j], self.output[i+j], self.output[i+j+1]])
-                    result = MultiplierCell.MultiplierCell([self.input_a[column], self.input_b[row], self.carry[row-1][column], self.carry[row][column-1], self.output[row+column], self.output[row+column+1]]).solve()
+                    # print([self.input_a[column], self.input_b[row], self.carry[row-1][column], self.carry[row][column-1], self.output[row+column], self.output[row+column+1]])
+                    result = MultiplierCell.MultiplierCell([self.input_a[column], self.input_b[row], '0', self.carry[row][column-1], self.output[row+column], self.output[row+column+1]]).solve()
                     if (result["error"] == '0' and self.output[row+column] == result["bits"][4] and self.output[row+column+1] == result["bits"][5]):
                         if (result["change"] == '1'):
                             self.input_a[column] = result["bits"][0]

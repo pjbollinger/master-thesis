@@ -3,18 +3,24 @@ import math
 import pprint
 import copy
 import itertools
-import multiprocessing
-import csv
+
 from pyfactorization.RippleCarryArrayMultiplier import RippleCarryArrayMultiplier
+
 pp = pprint.PrettyPrinter(indent=4)
 
-def f(entry):
+# Semiprimes 1 digit to 10 digits
+ranges = [
+    (2**x, 2**(x+1))
+    for x in range(1, 100+1)
+]
+print("a, b, resolved_count, total_count, error")
+for entry in ranges:
     a = sympy.randprime(entry[0], entry[1])
     b = sympy.nextprime(a) if sympy.nextprime(a) <= entry[1] else sympy.prevprime(a)
-    original = RippleCarryArrayMultiplier.RippleCarryArrayMultiplier(a * b)
-    result = original.solve_optimized()
+    original = RippleCarryArrayMultiplier(a * b)
+    result = original.solve()
     information_count = original.information_count()
-    return (a, b, information_count['resolved_count'], information_count['total_count'], result['error'])
+    print("{}, {}, {}, {}, {}".format(a, b, information_count['resolved_count'], information_count['total_count'], result['error']))
     # unknown_input_a = [{"index": index, "test_1": {"result": None, "information_count": None, "ok": None}, "test_0": {"result": None, "information_count": None, "ok": None}} for (index, value) in enumerate(original.input_a) if value == 'Z']
     # possible_input_a = []
     # for unknown in unknown_input_a:
@@ -47,15 +53,3 @@ def f(entry):
     #                 next_possible_input_a.append(test.input_a.copy())
     # next_possible_input_a = [list(x) for x in set(tuple(x) for x in next_possible_input_a)]
     # pp.pprint(next_possible_input_a)
-
-if __name__ == '__main__':
-    p = multiprocessing.Pool()
-    ranges = [
-        (2**x, 2**(x+1))
-        for x in range(1, 512+1)
-    ]
-    results = p.map(f, ranges)
-    with open('./generated_data/generated_data_optimized_1_512.csv', 'w') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(['a', 'b', 'resolved_count', 'total_count', 'error'])
-        csv_writer.writerows(results)
