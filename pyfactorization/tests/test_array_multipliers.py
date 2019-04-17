@@ -38,8 +38,8 @@ def test_6():
     assert expected_dump == actual_dump
     assert expected_information == actual_information
 
-@pytest.mark.skip("Need to implment carry save")
 def test_6_carry_save():
+    # TODO: Verify this test
     # 2 - '10'
     # 3 - '11'
     test = CarrySaveArrayMultiplier(6)
@@ -56,7 +56,7 @@ def test_6_carry_save():
             [None, None]
         ],
         "carry": [
-            ['0', '0'],
+            [None, None],
             ['0', None]
         ],
         "output": "0110"
