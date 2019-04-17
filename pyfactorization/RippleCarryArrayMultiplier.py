@@ -1,6 +1,7 @@
-from . import MultiplierCell
-from . import MultiplierCellHalfadder
-from . import gates
+import copy
+
+from . import MultiplierCell, MultiplierCellHalfadder, gates
+
 
 class RippleCarryArrayMultiplier:
     def __init__(self, semiprime=6):
@@ -10,9 +11,9 @@ class RippleCarryArrayMultiplier:
         self.output = self.output[::-1]
         self.number_of_multiplier_cells_in_row = len(self.output) // 2
         self.input_a = ["Z" for _ in range(self.number_of_multiplier_cells_in_row)]
-        self.input_b = ["Z" for _ in range(self.number_of_multiplier_cells_in_row)]
+        self.input_b = copy.deepcopy(self.input_a)
         self.carry = [["Z" for _ in range(self.number_of_multiplier_cells_in_row)] for _ in range(self.number_of_multiplier_cells_in_row)]
-        self.sum = [["Z" for _ in range(self.number_of_multiplier_cells_in_row)] for _ in range(self.number_of_multiplier_cells_in_row)]
+        self.sum = copy.deepcopy(self.carry)
         self.array_solve_dict = {
             ("i_eq_0", "j_eq_0"): self._solve_top_right_corner,
             ("i_gt_0", "j_eq_0"): self._solve_first_column,
@@ -88,19 +89,21 @@ class RippleCarryArrayMultiplier:
         #          ||└---- 2 input Sum In
         #          |└----- 1 inout Y
         #          └------ 0 inout X
+        def result():
+            return {"input_a": ''.join(self.input_a)[::-1], "input_b": ''.join(self.input_b)[::-1], "error": self.error}
         self.change = change
         self.error = '0'
         for i in range(len(self.input_b)):
             for j in range(len(self.input_a)):
-                i_key = self._index_i_to_key(i)
-                j_key = self._index_j_to_key(j)
+                i_key = self._index_to_key(i, self.input_b, "i")
+                j_key = self._index_to_key(j, self.input_a, "j")
                 self.array_solve_dict.get((i_key, j_key), self._solve_interior)(i, j)
                 if self.error == '1':
                     print(self.error)
-                    return({"input_a": ''.join(self.input_a)[::-1], "input_b": ''.join(self.input_b)[::-1], "error": self.error})
+                    return result()
         if self.change == '1':
             return(self.solve())
-        return({"input_a": ''.join(self.input_a)[::-1], "input_b": ''.join(self.input_b)[::-1], "error": self.error})
+        return result()
 
     def _solve_top_right_corner(self, i, j):
         result = MultiplierCell.MultiplierCell([self.input_a[j], self.input_b[i], '0', '0', self.output[i+j], self.carry[i][j]]).solve()
@@ -196,13 +199,13 @@ class RippleCarryArrayMultiplier:
         else:
             self.error = '1'
 
-    def _index_i_to_key(self, i):
-        if i == 0:
-            return "i_eq_0"
-        elif i == len(self.input_b) - 1:
-            return "i_eq_last"
+    def _index_to_key(self, index, input_x, index_letter):
+        if index == 0:
+            return index_letter + "_eq_0"
+        elif index == len(input_x) - 1:
+            return index_letter + "_eq_last"
         else:
-            return "i_gt_0"
+            return index_letter + "_gt_0"
 
     def _index_j_to_key(self, j):
         if j == 0:
@@ -244,18 +247,14 @@ class OptimizedRippleCarryArrayMultiplier(RippleCarryArrayMultiplier):
         self.sum[i][j] = None
 
     def _solve_top_left_corner(self, i, j):
-        result = gates.and_gate(self.input_a[j], self.input_b[i], self.sum[i][j])
-        if (result["error"] == '0'):
-            if (result["change"] == '1'):
-                self.input_a[j] = result["gates"][0]
-                self.input_b[i] = result["gates"][1]
-                self.sum[i][j] = result["gates"][2]
-                self.change = '1'
-        else:
-            self.error = '1'
+        self._top_row_and_gate(i, j)
         self.carry[i][j] = '0'
 
     def _solve_top_row(self, i, j):
+        self._top_row_and_gate(i, j)
+        self.carry[i][j] = None
+
+    def _top_row_and_gate(self, i, j):
         result = gates.and_gate(self.input_a[j], self.input_b[i], self.sum[i][j])
         if (result["error"] == '0'):
             if (result["change"] == '1'):
@@ -265,4 +264,3 @@ class OptimizedRippleCarryArrayMultiplier(RippleCarryArrayMultiplier):
                 self.change = '1'
         else:
             self.error = '1'
-        self.carry[i][j] = None
