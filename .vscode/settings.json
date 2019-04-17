@@ -1,4 +1,5 @@
 {
     "python.linting.pylintEnabled": true,
-    "python.pythonPath": "/usr/local/bin/python3"
+    "python.pythonPath": "~/.local/share/virtualenvs/pyfactorization-8a8Y34lP/bin/python",
+    "linter_codeclimate.enabled": true,
 }
